@@ -9,7 +9,7 @@ Once an AI agent starts reading files, calling tools, and retrying actions, raw 
 
 ## Core Value
 - **Tool-Call Timeline**: Inspect agent actions and API calls in chronological order.
-- **File Diff Correlation**: Connect the agent's reasoning directly to the code it changed.
+- **File Diff Correlation**: Connect agent activity directly to the code it changed.
 - **Failure Focus**: Instantly locate failed steps, context limit errors, and blocked tool retries.
 
 ## Who is this for?
