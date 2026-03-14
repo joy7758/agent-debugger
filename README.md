@@ -73,3 +73,7 @@ Your code and execution traces stay on your machine.
    - `Agent Debugger: Load Happy Path Trace`
    - `Agent Debugger: Load Tool Retry Failure Trace`
    - `Agent Debugger: Load Context Window Failure Trace`
+
+## Verification
+- Run `npm test` for schema, view-model, and command-level extension coverage.
+- Run `npm run test:ui` to validate the `Agent Debugger` tree roots and invalid trace error handling through the extension command surface.

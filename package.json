@@ -59,6 +59,7 @@
   "scripts": {
     "compile": "tsc -p ./tsconfig.json",
     "test": "npm run compile && node --test ./test/**/*.test.js",
+    "test:ui": "npm run compile && node --test ./test/extension-ui.test.js",
     "watch": "tsc -watch -p ./tsconfig.json",
     "vscode:prepublish": "npm run compile"
   },
