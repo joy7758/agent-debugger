@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "0.1.0",
+  "run": {
+    "runId": "run_context_window_failure",
+    "framework": "langgraph",
+    "status": "error",
+    "startedAt": "2026-03-14T11:40:00Z",
+    "endedAt": "2026-03-14T11:40:04Z",
+    "source": "langgraph.callback",
+    "workflow": {
+      "name": "repo-fixer",
+      "entrypoint": "graph.py:build_graph"
+    },
+    "workspace": {
+      "root": "/workspace/demo-repo",
+      "vcs": {
+        "provider": "git",
+        "head": "8245c7b"
+      }
+    }
+  },
+  "events": [
+    {
+      "id": "evt_001",
+      "seq": 1,
+      "ts": "2026-03-14T11:40:00Z",
+      "kind": "run.started",
+      "level": "info",
+      "actor": {
+        "type": "run",
+        "id": "run_context_window_failure",
+        "name": "repo-fixer"
+      }
+    },
+    {
+      "id": "evt_002",
+      "seq": 2,
+      "ts": "2026-03-14T11:40:00.120Z",
+      "kind": "node.started",
+      "level": "info",
+      "actor": {
+        "type": "node",
+        "id": "plan_changes",
+        "name": "plan_changes"
+      },
+      "parentId": "evt_001"
+    },
+    {
+      "id": "evt_003",
+      "seq": 3,
+      "ts": "2026-03-14T11:40:00.220Z",
+      "kind": "model.started",
+      "level": "info",
+      "actor": {
+        "type": "model",
+        "id": "call_plan_04",
+        "name": "gpt-5.1"
+      },
+      "parentId": "evt_002",
+      "payload": {
+        "model": {
+          "provider": "openai",
+          "name": "gpt-5.1"
+        }
+      }
+    },
+    {
+      "id": "evt_004",
+      "seq": 4,
+      "ts": "2026-03-14T11:40:03.900Z",
+      "kind": "model.failed",
+      "level": "error",
+      "actor": {
+        "type": "model",
+        "id": "call_plan_04",
+        "name": "gpt-5.1"
+      },
+      "parentId": "evt_003",
+      "durationMs": 3680,
+      "payload": {
+        "model": {
+          "provider": "openai",
+          "name": "gpt-5.1"
+        },
+        "error": {
+          "code": "context_length_exceeded",
+          "message": "The conversation exceeded the model context window.",
+          "retryable": false,
+          "classification": "context_window_exceeded"
+        }
+      }
+    },
+    {
+      "id": "evt_005",
+      "seq": 5,
+      "ts": "2026-03-14T11:40:03.950Z",
+      "kind": "node.failed",
+      "level": "error",
+      "actor": {
+        "type": "node",
+        "id": "plan_changes",
+        "name": "plan_changes"
+      },
+      "parentId": "evt_002",
+      "relatedEventIds": [
+        "evt_004"
+      ],
+      "durationMs": 3830,
+      "payload": {
+        "error": {
+          "classification": "context_window_exceeded",
+          "message": "Planning step aborted because the model could not accept the prompt."
+        }
+      }
+    },
+    {
+      "id": "evt_006",
+      "seq": 6,
+      "ts": "2026-03-14T11:40:04Z",
+      "kind": "run.failed",
+      "level": "error",
+      "actor": {
+        "type": "run",
+        "id": "run_context_window_failure",
+        "name": "repo-fixer"
+      },
+      "parentId": "evt_001",
+      "relatedEventIds": [
+        "evt_005"
+      ],
+      "durationMs": 4000,
+      "payload": {
+        "error": {
+          "classification": "context_window_exceeded",
+          "message": "Run aborted during planning."
+        }
+      }
+    }
+  ]
+}

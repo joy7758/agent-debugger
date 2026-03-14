@@ -1,0 +1,74 @@
+{
+  "name": "agent-debugger",
+  "displayName": "Agent Debugger",
+  "description": "Local-first trace inspector for AI coding workflows.",
+  "version": "0.0.1",
+  "publisher": "local",
+  "private": true,
+  "engines": {
+    "vscode": "^1.110.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:agentDebugger.traceInspector",
+    "onCommand:agentDebugger.loadHappyPathTrace",
+    "onCommand:agentDebugger.loadToolRetryFailureTrace",
+    "onCommand:agentDebugger.loadContextWindowFailureTrace",
+    "onCommand:agentDebugger.openTraceFile"
+  ],
+  "main": "./dist/vscode-extension/src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "agentDebugger.loadHappyPathTrace",
+        "title": "Agent Debugger: Load Happy Path Trace"
+      },
+      {
+        "command": "agentDebugger.loadToolRetryFailureTrace",
+        "title": "Agent Debugger: Load Tool Retry Failure Trace"
+      },
+      {
+        "command": "agentDebugger.loadContextWindowFailureTrace",
+        "title": "Agent Debugger: Load Context Window Failure Trace"
+      },
+      {
+        "command": "agentDebugger.openTraceFile",
+        "title": "Agent Debugger: Open Trace File"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "agentDebugger.traceInspector",
+          "name": "Agent Debugger"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "agentDebugger.openTraceFile",
+          "when": "view == agentDebugger.traceInspector",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./tsconfig.json",
+    "test": "npm run compile && node --test ./test/**/*.test.js",
+    "watch": "tsc -watch -p ./tsconfig.json",
+    "vscode:prepublish": "npm run compile"
+  },
+  "dependencies": {
+    "ajv": "^8.18.0",
+    "ajv-formats": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/vscode": "^1.110.0",
+    "typescript": "^5.9.3"
+  }
+}

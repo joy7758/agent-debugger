@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-debugger.local/schema/trace-0.1.json",
+  "title": "AgentDebuggerTrace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "run",
+    "events"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "run": {
+      "$ref": "#/$defs/run"
+    },
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    }
+  },
+  "$defs": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "error",
+        "cancelled"
+      ]
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "name"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "run",
+            "node",
+            "tool",
+            "model",
+            "system"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "runId",
+        "framework",
+        "status",
+        "startedAt",
+        "workspace"
+      ],
+      "properties": {
+        "runId": {
+          "type": "string"
+        },
+        "framework": {
+          "type": "string",
+          "enum": [
+            "langgraph"
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "startedAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "endedAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "source": {
+          "type": "string"
+        },
+        "workflow": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "entrypoint": {
+              "type": "string"
+            }
+          }
+        },
+        "workspace": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "root"
+          ],
+          "properties": {
+            "root": {
+              "type": "string"
+            },
+            "vcs": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "provider": {
+                  "type": "string"
+                },
+                "head": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "seq",
+        "ts",
+        "kind",
+        "level",
+        "actor"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "run.started",
+            "run.completed",
+            "run.failed",
+            "node.started",
+            "node.completed",
+            "node.failed",
+            "tool.started",
+            "tool.completed",
+            "tool.failed",
+            "model.started",
+            "model.completed",
+            "model.failed",
+            "file.changed",
+            "artifact.created",
+            "log.message"
+          ]
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ]
+        },
+        "actor": {
+          "$ref": "#/$defs/actor"
+        },
+        "parentId": {
+          "type": "string"
+        },
+        "relatedEventIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "durationMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

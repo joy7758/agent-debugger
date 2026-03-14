@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "0.1.0",
+  "run": {
+    "framework": "langgraph",
+    "status": "error",
+    "startedAt": "2026-03-14T12:00:00Z",
+    "endedAt": "2026-03-14T12:00:01Z",
+    "workspace": {
+      "root": "/workspace/demo-repo"
+    }
+  },
+  "events": [
+    {
+      "id": "evt_001",
+      "seq": 1,
+      "ts": "2026-03-14T12:00:00Z",
+      "kind": "run.started",
+      "level": "info",
+      "actor": {
+        "type": "run",
+        "name": "repo-fixer"
+      }
+    }
+  ]
+}

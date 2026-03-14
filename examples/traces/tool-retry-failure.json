@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "0.1.0",
+  "run": {
+    "runId": "run_tool_retry_failure",
+    "framework": "langgraph",
+    "status": "error",
+    "startedAt": "2026-03-14T11:02:10Z",
+    "endedAt": "2026-03-14T11:02:16Z",
+    "source": "langgraph.callback",
+    "workflow": {
+      "name": "repo-fixer",
+      "entrypoint": "graph.py:build_graph"
+    },
+    "workspace": {
+      "root": "/workspace/demo-repo",
+      "vcs": {
+        "provider": "git",
+        "head": "6c234d0"
+      }
+    }
+  },
+  "events": [
+    {
+      "id": "evt_001",
+      "seq": 1,
+      "ts": "2026-03-14T11:02:10Z",
+      "kind": "run.started",
+      "level": "info",
+      "actor": {
+        "type": "run",
+        "id": "run_tool_retry_failure",
+        "name": "repo-fixer"
+      }
+    },
+    {
+      "id": "evt_002",
+      "seq": 2,
+      "ts": "2026-03-14T11:02:10.200Z",
+      "kind": "node.started",
+      "level": "info",
+      "actor": {
+        "type": "node",
+        "id": "collect_context",
+        "name": "collect_context"
+      },
+      "parentId": "evt_001"
+    },
+    {
+      "id": "evt_003",
+      "seq": 3,
+      "ts": "2026-03-14T11:02:11Z",
+      "kind": "tool.started",
+      "level": "info",
+      "actor": {
+        "type": "tool",
+        "id": "tool:run_shell",
+        "name": "run_shell"
+      },
+      "parentId": "evt_002",
+      "attempt": 1,
+      "payload": {
+        "tool": {
+          "name": "run_shell",
+          "args": {
+            "command": "rg TODO src/"
+          }
+        }
+      }
+    },
+    {
+      "id": "evt_004",
+      "seq": 4,
+      "ts": "2026-03-14T11:02:11.900Z",
+      "kind": "tool.failed",
+      "level": "error",
+      "actor": {
+        "type": "tool",
+        "id": "tool:run_shell",
+        "name": "run_shell"
+      },
+      "parentId": "evt_003",
+      "attempt": 1,
+      "durationMs": 900,
+      "payload": {
+        "tool": {
+          "name": "run_shell"
+        },
+        "error": {
+          "code": "ENOENT",
+          "message": "rg: command not found",
+          "retryable": true,
+          "classification": "tool_error"
+        }
+      }
+    },
+    {
+      "id": "evt_005",
+      "seq": 5,
+      "ts": "2026-03-14T11:02:13Z",
+      "kind": "tool.started",
+      "level": "warning",
+      "actor": {
+        "type": "tool",
+        "id": "tool:run_shell",
+        "name": "run_shell"
+      },
+      "parentId": "evt_002",
+      "relatedEventIds": [
+        "evt_003",
+        "evt_004"
+      ],
+      "attempt": 2,
+      "payload": {
+        "tool": {
+          "name": "run_shell",
+          "args": {
+            "command": "grep -R TODO src/"
+          }
+        }
+      }
+    },
+    {
+      "id": "evt_006",
+      "seq": 6,
+      "ts": "2026-03-14T11:02:14.500Z",
+      "kind": "tool.failed",
+      "level": "error",
+      "actor": {
+        "type": "tool",
+        "id": "tool:run_shell",
+        "name": "run_shell"
+      },
+      "parentId": "evt_005",
+      "attempt": 2,
+      "durationMs": 1500,
+      "payload": {
+        "tool": {
+          "name": "run_shell"
+        },
+        "error": {
+          "code": "EXIT_2",
+          "message": "grep: src/: No such file or directory",
+          "retryable": false,
+          "classification": "tool_retry_exhausted"
+        }
+      }
+    },
+    {
+      "id": "evt_007",
+      "seq": 7,
+      "ts": "2026-03-14T11:02:15Z",
+      "kind": "node.failed",
+      "level": "error",
+      "actor": {
+        "type": "node",
+        "id": "collect_context",
+        "name": "collect_context"
+      },
+      "parentId": "evt_002",
+      "relatedEventIds": [
+        "evt_004",
+        "evt_006"
+      ],
+      "durationMs": 4800,
+      "payload": {
+        "error": {
+          "classification": "tool_retry_exhausted",
+          "message": "Failed to gather context after 2 attempts."
+        }
+      }
+    },
+    {
+      "id": "evt_008",
+      "seq": 8,
+      "ts": "2026-03-14T11:02:16Z",
+      "kind": "run.failed",
+      "level": "error",
+      "actor": {
+        "type": "run",
+        "id": "run_tool_retry_failure",
+        "name": "repo-fixer"
+      },
+      "parentId": "evt_001",
+      "relatedEventIds": [
+        "evt_007"
+      ],
+      "durationMs": 6000,
+      "payload": {
+        "error": {
+          "classification": "tool_retry_exhausted",
+          "message": "Run aborted because context collection could not complete."
+        }
+      }
+    }
+  ]
+}

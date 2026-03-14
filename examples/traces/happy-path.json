@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "0.1.0",
+  "run": {
+    "runId": "run_demo_success",
+    "framework": "langgraph",
+    "status": "ok",
+    "startedAt": "2026-03-14T10:31:22Z",
+    "endedAt": "2026-03-14T10:31:24Z",
+    "source": "langgraph.callback",
+    "workflow": {
+      "name": "repo-fixer",
+      "entrypoint": "graph.py:build_graph"
+    },
+    "workspace": {
+      "root": "/workspace/demo-repo",
+      "vcs": {
+        "provider": "git",
+        "head": "9f0f2f1"
+      }
+    }
+  },
+  "events": [
+    {
+      "id": "evt_001",
+      "seq": 1,
+      "ts": "2026-03-14T10:31:22Z",
+      "kind": "run.started",
+      "level": "info",
+      "actor": {
+        "type": "run",
+        "id": "run_demo_success",
+        "name": "repo-fixer"
+      }
+    },
+    {
+      "id": "evt_002",
+      "seq": 2,
+      "ts": "2026-03-14T10:31:22.100Z",
+      "kind": "node.started",
+      "level": "info",
+      "actor": {
+        "type": "node",
+        "id": "planner",
+        "name": "planner"
+      },
+      "parentId": "evt_001"
+    },
+    {
+      "id": "evt_003",
+      "seq": 3,
+      "ts": "2026-03-14T10:31:22.220Z",
+      "kind": "model.started",
+      "level": "info",
+      "actor": {
+        "type": "model",
+        "id": "call_plan_01",
+        "name": "gpt-5.1"
+      },
+      "parentId": "evt_002",
+      "payload": {
+        "model": {
+          "provider": "openai",
+          "name": "gpt-5.1"
+        }
+      }
+    },
+    {
+      "id": "evt_004",
+      "seq": 4,
+      "ts": "2026-03-14T10:31:22.740Z",
+      "kind": "model.completed",
+      "level": "info",
+      "actor": {
+        "type": "model",
+        "id": "call_plan_01",
+        "name": "gpt-5.1"
+      },
+      "parentId": "evt_003",
+      "durationMs": 520,
+      "payload": {
+        "model": {
+          "provider": "openai",
+          "name": "gpt-5.1",
+          "usage": {
+            "inputTokens": 728,
+            "outputTokens": 142
+          }
+        }
+      }
+    },
+    {
+      "id": "evt_005",
+      "seq": 5,
+      "ts": "2026-03-14T10:31:22.760Z",
+      "kind": "node.completed",
+      "level": "info",
+      "actor": {
+        "type": "node",
+        "id": "planner",
+        "name": "planner"
+      },
+      "parentId": "evt_002",
+      "durationMs": 660
+    },
+    {
+      "id": "evt_006",
+      "seq": 6,
+      "ts": "2026-03-14T10:31:22.780Z",
+      "kind": "node.started",
+      "level": "info",
+      "actor": {
+        "type": "node",
+        "id": "apply_patch",
+        "name": "apply_patch"
+      },
+      "parentId": "evt_001"
+    },
+    {
+      "id": "evt_007",
+      "seq": 7,
+      "ts": "2026-03-14T10:31:23.050Z",
+      "kind": "tool.started",
+      "level": "info",
+      "actor": {
+        "type": "tool",
+        "id": "tool:write_file",
+        "name": "write_file"
+      },
+      "parentId": "evt_006",
+      "attempt": 1,
+      "payload": {
+        "tool": {
+          "name": "write_file",
+          "args": {
+            "path": "README.md"
+          }
+        }
+      }
+    },
+    {
+      "id": "evt_008",
+      "seq": 8,
+      "ts": "2026-03-14T10:31:23.092Z",
+      "kind": "tool.completed",
+      "level": "info",
+      "actor": {
+        "type": "tool",
+        "id": "tool:write_file",
+        "name": "write_file"
+      },
+      "parentId": "evt_007",
+      "attempt": 1,
+      "durationMs": 42,
+      "payload": {
+        "tool": {
+          "name": "write_file",
+          "args": {
+            "path": "README.md"
+          }
+        }
+      }
+    },
+    {
+      "id": "evt_009",
+      "seq": 9,
+      "ts": "2026-03-14T10:31:23.120Z",
+      "kind": "file.changed",
+      "level": "info",
+      "actor": {
+        "type": "system",
+        "name": "workspace-diff"
+      },
+      "relatedEventIds": [
+        "evt_008"
+      ],
+      "payload": {
+        "file": {
+          "path": "README.md",
+          "changeType": "modified",
+          "correlationMode": "direct-tool-metadata",
+          "patchSummary": "@@ -20,3 +20,4 @@"
+        }
+      }
+    },
+    {
+      "id": "evt_010",
+      "seq": 10,
+      "ts": "2026-03-14T10:31:24Z",
+      "kind": "run.completed",
+      "level": "info",
+      "actor": {
+        "type": "run",
+        "id": "run_demo_success",
+        "name": "repo-fixer"
+      },
+      "parentId": "evt_001",
+      "durationMs": 2000
+    }
+  ]
+}
