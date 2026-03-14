@@ -3,16 +3,25 @@
   "displayName": "Agent Debugger",
   "description": "Local-first trace inspector for AI coding workflows.",
   "version": "0.0.1",
-  "publisher": "local",
-  "private": true,
+  "publisher": "joy7758",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joy7758/agent-debugger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joy7758/agent-debugger/issues"
+  },
+  "homepage": "https://github.com/joy7758/agent-debugger#readme",
   "engines": {
     "vscode": "^1.110.0"
   },
   "categories": [
-    "Other"
+    "Debuggers"
   ],
   "activationEvents": [
     "onView:agentDebugger.traceInspector",
+    "onCommand:agentDebugger.tryDemoTrace",
     "onCommand:agentDebugger.loadHappyPathTrace",
     "onCommand:agentDebugger.loadToolRetryFailureTrace",
     "onCommand:agentDebugger.loadContextWindowFailureTrace",
@@ -21,6 +30,10 @@
   "main": "./dist/vscode-extension/src/extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "agentDebugger.tryDemoTrace",
+        "title": "Agent Debugger: Try Demo Trace"
+      },
       {
         "command": "agentDebugger.loadHappyPathTrace",
         "title": "Agent Debugger: Load Happy Path Trace"
@@ -58,6 +71,8 @@
   },
   "scripts": {
     "compile": "tsc -p ./tsconfig.json",
+    "package": "vsce package",
+    "publish:vsce": "vsce publish",
     "test": "npm run compile && node --test ./test/**/*.test.js",
     "test:ui": "npm run compile && node --test ./test/extension-ui.test.js",
     "watch": "tsc -watch -p ./tsconfig.json",
@@ -70,6 +85,7 @@
   "devDependencies": {
     "@types/node": "^25.5.0",
     "@types/vscode": "^1.110.0",
+    "@vscode/vsce": "^3.7.1",
     "typescript": "^5.9.3"
   }
 }

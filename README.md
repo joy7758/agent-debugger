@@ -47,7 +47,7 @@ Agent-Debugger v0.1 采用一个聚焦且本地化的工作流：
 Agent-Debugger v0.1 follows a narrow local workflow:
 
 1. **LangGraph Adapter** 以 JSON 形式输出一次已完成运行的 trace。 / A **LangGraph Adapter** emits a completed run trace as JSON.
-2. trace 会依据 [`core/event-schema/trace.schema.json`](/Users/zhangbin/GitHub/agent-debugger/core/event-schema/trace.schema.json) 中的 **Standard Event Schema** 进行校验。 / The trace is validated against the **Standard Event Schema** in [`core/event-schema/trace.schema.json`](/Users/zhangbin/GitHub/agent-debugger/core/event-schema/trace.schema.json).
+2. trace 会依据 [`core/event-schema/trace.schema.json`](./core/event-schema/trace.schema.json) 中的 **Standard Event Schema** 进行校验。 / The trace is validated against the **Standard Event Schema** in [`core/event-schema/trace.schema.json`](./core/event-schema/trace.schema.json).
 3. trace 会被存储到本地 `.agent-debugger/runs/`。 / The trace is stored locally in `.agent-debugger/runs/`.
 4. **VS Code 扩展 / VS Code extension** 加载该 trace，并渲染时间线、文件视图和故障视图。 / A **VS Code extension** loads that trace and renders timeline, file, and failure views.
 
@@ -55,10 +55,10 @@ Agent-Debugger v0.1 follows a narrow local workflow:
 The first version is intentionally post-run and file-based. Live streaming can be added later if the static workflow proves useful.
 
 ## 仓库结构 / Repo Map
-- [`core/event-schema/README.md`](/Users/zhangbin/GitHub/agent-debugger/core/event-schema/README.md): 规范化 trace 模型。 / Canonical trace model.
-- [`core/event-schema/trace.schema.json`](/Users/zhangbin/GitHub/agent-debugger/core/event-schema/trace.schema.json): 运行时校验契约。 / Runtime validation contract.
-- [`examples/traces`](/Users/zhangbin/GitHub/agent-debugger/examples/traces): 用于实现和测试的样例 fixture。 / Sample fixtures for implementation and tests.
-- [`test/trace.test.js`](/Users/zhangbin/GitHub/agent-debugger/test/trace.test.js): 最小自动化验收测试。 / Minimal automated acceptance harness.
+- [`core/event-schema/README.md`](./core/event-schema/README.md): 规范化 trace 模型。 / Canonical trace model.
+- [`core/event-schema/trace.schema.json`](./core/event-schema/trace.schema.json): 运行时校验契约。 / Runtime validation contract.
+- [`examples/traces`](./examples/traces): 用于实现和测试的样例 fixture。 / Sample fixtures for implementation and tests.
+- [`test/trace.test.js`](./test/trace.test.js): 最小自动化验收测试。 / Minimal automated acceptance harness.
 
 ## 信任说明 / Trust Statement
 你的代码和执行 trace 会保留在你的机器上。  
@@ -73,14 +73,24 @@ Your code and execution traces stay on your machine.
 ⚠️ **早期阶段。当前已有一个最小可运行的 v0.1 切片，更完整的实现仍在推进中。**  
 ⚠️ **Early stage. A minimal runnable v0.1 slice exists and broader implementation is still in progress.**
 
-## 本地预览 / Early Local Preview
+## 安装与试用 / Install & Try
+### 路径 1：从 VSIX 本地安装 / Path 1: Local Install From VSIX
+1. 下载测试人员收到的 `.vsix` 文件。 / Download the `.vsix` file shared for testing.
+2. 在 VS Code 中运行 `Extensions: Install from VSIX...` 并选择该文件。 / In VS Code, run `Extensions: Install from VSIX...` and select the file.
+3. 或者运行 `code --install-extension <file>.vsix`。 / Or run `code --install-extension <file>.vsix`.
+4. 安装后，在命令面板运行 `Agent Debugger: Try Demo Trace`。 / After install, run `Agent Debugger: Try Demo Trace` from the Command Palette.
+
+### 路径 2：扩展开发模式 / Path 2: Extension Development Mode
 1. 运行 `npm install`。 / Run `npm install`.
 2. 运行 `npm run compile`。 / Run `npm run compile`.
 3. 在 VS Code 中打开本仓库，并启动 `Run Agent Debugger Extension`。 / Open this repo in VS Code and launch `Run Agent Debugger Extension`.
-4. 在 Extension Development Host 中运行以下任一命令： / In the Extension Development Host, run one of:
-   - `Agent Debugger: Load Happy Path Trace`
-   - `Agent Debugger: Load Tool Retry Failure Trace`
-   - `Agent Debugger: Load Context Window Failure Trace`
+4. 在 Extension Development Host 中运行 `Agent Debugger: Try Demo Trace`。 / In the Extension Development Host, run `Agent Debugger: Try Demo Trace`.
+
+当前扩展只做三件事：加载本地 JSON trace、按 schema 校验、在 Tree View 中展示运行摘要、故障聚焦、文件触达和时间线。它默认不会上传源码，也不会执行 replay、平台同步或治理 UI。  
+The current extension does three things only: load local JSON traces, validate them against the bundled schema, and render run summary, failure focus, files touched, and timeline in the Tree View. It does not upload source code by default, and it does not provide replay, platform sync, or governance UI.
+
+当前早期测试通过 VSIX 分发，Marketplace 发布计划后续再做。  
+Early tester distribution is currently via VSIX; Marketplace publication is planned later.
 
 ## 验证 / Verification
 - 运行 `npm test`，覆盖 schema、view-model 和命令级扩展逻辑。 / Run `npm test` for schema, view-model, and command-level extension coverage.

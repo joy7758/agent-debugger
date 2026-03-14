@@ -15,6 +15,9 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(vscode.window.registerTreeDataProvider(TRACE_VIEW_ID, treeDataProvider));
 
   context.subscriptions.push(
+    vscode.commands.registerCommand("agentDebugger.tryDemoTrace", async () => {
+      await loadTraceIntoTree(treeDataProvider, () => traceLoader.loadExampleTrace("happy-path.json"));
+    }),
     vscode.commands.registerCommand("agentDebugger.loadHappyPathTrace", async () => {
       await loadTraceIntoTree(treeDataProvider, () => traceLoader.loadExampleTrace("happy-path.json"));
     }),

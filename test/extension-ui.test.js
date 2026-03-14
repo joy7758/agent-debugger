@@ -16,6 +16,7 @@ test("extension commands populate the Agent Debugger tree view roots", async () 
 
     const expectedRoots = ["Run Summary", "Failure Focus", "Files Touched", "Timeline"];
     const scenarios = [
+      ["agentDebugger.tryDemoTrace", "Loaded trace run_demo_success."],
       ["agentDebugger.loadHappyPathTrace", "Loaded trace run_demo_success."],
       ["agentDebugger.loadToolRetryFailureTrace", "Loaded trace run_tool_retry_failure."],
       ["agentDebugger.loadContextWindowFailureTrace", "Loaded trace run_context_window_failure."]
