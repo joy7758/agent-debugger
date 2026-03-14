@@ -1,1 +1,1 @@
-# VS Code Extension
+# VS Code 扩展 / VS Code Extension
