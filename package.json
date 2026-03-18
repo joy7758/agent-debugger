@@ -2,21 +2,31 @@
   "name": "agent-debugger",
   "displayName": "Agent Debugger",
   "description": "Local-first trace inspector for AI coding workflows.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "joy7758",
+  "icon": "icon.png",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joy7758/agent-debugger.git"
+    "url": "https://github.com/joy7758/agent-debugger"
   },
   "bugs": {
     "url": "https://github.com/joy7758/agent-debugger/issues"
   },
   "homepage": "https://github.com/joy7758/agent-debugger#readme",
+  "keywords": [
+    "ai",
+    "agent",
+    "debugger",
+    "ai coding",
+    "trace",
+    "timeline"
+  ],
   "engines": {
     "vscode": "^1.110.0"
   },
   "categories": [
+    "Other",
     "Debuggers"
   ],
   "activationEvents": [
